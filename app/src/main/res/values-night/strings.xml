@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ble_not_supported">BLE Not Supported</string>
+    <string name="error_bluetooth_not_supported">Bluetooth Not Supported</string>
+</resources>

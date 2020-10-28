@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".server.ServerActivity">
+
+    <EditText
+        android:id="@+id/et_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_80"
+        android:inputType="textMultiLine"
+        android:hint="@string/text_value"
+        android:textSize="@dimen/text_24"
+        android:textColor="@color/teal_200"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_encrypted"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_135"
+        android:text="@string/text_encrypted"
+        android:textSize="@dimen/text_24"
+        android:textColor="@color/teal_700"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_value" />
+
+    <Button
+        android:id="@+id/button_ble"
+        android:layout_width="@dimen/dimen_185"
+        android:layout_height="wrap_content"
+        android:text="@string/button_ble"
+        android:layout_marginTop="@dimen/dimen_80"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_encrypted" />
+
+    <Button
+        android:id="@+id/button_nfc"
+        android:layout_width="@dimen/dimen_185"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_80"
+        android:text="@string/button_nfc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_ble" />
+
+    <Button
+        android:id="@+id/button_encrypt"
+        android:layout_width="@dimen/dimen_185"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_encrypt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_nfc"
+        app:layout_constraintVertical_bias="0.522" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".client.ClientActivity">
+
+    <TextView
+        android:id="@+id/text_encrypted"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_115"
+        android:textSize="@dimen/text_24"
+        android:textAlignment="center"
+        android:textColor="@color/teal_200"
+        android:text="@string/text_encrypted"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_decrypted"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_40"
+        android:textSize="@dimen/text_24"
+        android:textAlignment="center"
+        android:textColor="@color/teal_700"
+        android:text="@string/text_decrypted"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toTopOf="@+id/btnBle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_encrypted"
+        app:layout_constraintVertical_bias="0.347" />
+
+    <Button
+        android:id="@+id/btnBle"
+        android:layout_width="@dimen/dimen_185"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:text="@string/ble_reader"
+        app:layout_constraintBottom_toTopOf="@+id/btnNfc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnNfc"
+        android:layout_width="@dimen/dimen_185"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_115"
+        android:text="@string/nfc_reader"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
