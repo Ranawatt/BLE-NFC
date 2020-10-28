@@ -16,10 +16,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ble_nfc.service.AdvertiserService;
 import com.example.ble_nfc.util.AES;
 import com.example.ble_nfc.R;
 import com.example.ble_nfc.client.ClientActivity;
 import com.example.ble_nfc.service.HCEManager;
+import com.example.ble_nfc.util.Constant;
 
 import static com.example.ble_nfc.util.Utils.READER_FLAGS;
 
@@ -30,24 +32,35 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
     private EditText etValue;
     private TextView tvEncrypt;
     private Button btnEncrypt, btnBle, btnNfc;
-//    private LeDeviceListAdapter mLeDeviceListAdapter;
     private BluetoothAdapter mBluetoothAdapter;
     public HCEManager mHCEManager;
-    private Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_server);
 
+        initUi();
+        initListener();
+    }
+
+    private void initUi() {
         etValue = findViewById(R.id.et_value);
         tvEncrypt = findViewById(R.id.tv_encrypted);
         btnBle = findViewById(R.id.button_ble);
         btnNfc = findViewById(R.id.button_nfc);
         btnEncrypt = findViewById(R.id.button_encrypt);
-        btnEncrypt.setOnClickListener(this);
-        btnBle.setOnClickListener(this);
     }
+    private void initListener() {
+        btnEncrypt.setOnClickListener(this);
+//        if (tvEncrypt.getText().toString().isEmpty()){
+//            Toast.makeText(this,"Encrypt First",Toast.LENGTH_LONG).show();
+//        }else{
+            btnBle.setOnClickListener(this);
+            btnNfc.setOnClickListener(this);
+//        }
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -58,8 +71,6 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
             tvEncrypt.setText(encryptedString);
         }
         if(v.getId() == R.id.button_ble){
-            mHandler = new Handler();
-
             if (!getPackageManager().hasSystemFeature(
                     PackageManager.FEATURE_BLUETOOTH_LE)) {
                 Toast.makeText(this, R.string.ble_not_supported, Toast.LENGTH_SHORT)
@@ -69,26 +80,72 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
             final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
             mBluetoothAdapter = bluetoothManager.getAdapter();
 
-            if (mBluetoothAdapter == null) {
+            if (mBluetoothAdapter != null) {
+                if (mBluetoothAdapter.isEnabled()){
+                    if (mBluetoothAdapter.isMultipleAdvertisementSupported()){
+                        startAdvertising();
+                    }
+                }else{
+                    // Prompt user to turn on Bluetooth
+                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivityForResult(enableBtIntent, Constant.REQUEST_ENABLE_BT);
+                }
+            }else{
                 Toast.makeText(this, R.string.error_bluetooth_not_supported,
                         Toast.LENGTH_SHORT).show();
                 finish();
                 return;
             }
 
-            startActivity(new Intent(this, ClientActivity.class));
+//            startActivity(new Intent(this, ClientActivity.class));
         }
 
         if (v.getId() == R.id.button_nfc){
-            String data = tvEncrypt.getText().toString();
-            enableReaderMode();
-            if (data.isEmpty())
-                Toast.makeText(this, "Encrypt the message to send", Toast.LENGTH_SHORT).show();
-            mHCEManager.setData(data.getBytes());
+            if (tvEncrypt.getText().toString().isEmpty()){
+                Toast.makeText(this,"Encrypt First",Toast.LENGTH_LONG).show();
+            }else{
+                String data = tvEncrypt.getText().toString();
+                enableReaderMode();
+                if (data.isEmpty())
+                    Toast.makeText(this, "Encrypt the message to send", Toast.LENGTH_SHORT).show();
+                mHCEManager.setData(data.getBytes());
 
-            sendEncryptedData();
+                sendEncryptedData();
+            }
+
         }
 
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case Constant.REQUEST_ENABLE_BT:
+
+                if (resultCode == RESULT_OK) {
+                    // Bluetooth is now Enabled, are Bluetooth Advertisements supported on this device?
+                    if (mBluetoothAdapter.isMultipleAdvertisementSupported()) {
+                        startAdvertising();
+                    } else {
+                        // Bluetooth Advertisements are not supported.
+                        Toast.makeText(this,R.string.bt_ads_not_supported,Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(this, R.string.bt_not_enabled_leaving,
+                            Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void startAdvertising() {
+        Intent serviceIntent = new Intent(this, AdvertiserService.class);
+        serviceIntent.putExtra("advertisedString",tvEncrypt.getText().toString());
+        startService(serviceIntent);
     }
 
     private void sendEncryptedData() {

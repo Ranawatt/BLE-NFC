@@ -15,6 +15,9 @@
     <string name="ble_not_supported">BLE Not Supported</string>
     <string name="error_bluetooth_not_supported">Bluetooth Not Supported</string>
 
+    <string name="bt_not_enabled_leaving">User declined to enable Bluetooth, exiting Bluetooth Advertisements.</string>
+    <string name="bt_ads_not_supported">Bluetooth Advertisements are not supported on this device.</string>
+
     <string name="bt_null">Error: Bluetooth object null</string>
 
 </resources>

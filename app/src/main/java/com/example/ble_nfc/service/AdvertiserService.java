@@ -11,10 +11,13 @@ import android.bluetooth.le.AdvertiseSettings;
 import android.bluetooth.le.BluetoothLeAdvertiser;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.ble_nfc.R;
 import com.example.ble_nfc.server.ServerActivity;
@@ -36,6 +39,7 @@ public class AdvertiserService extends Service {
     private AdvertiseCallback mAdvertiseCallback;
     private Handler mHandler;
     private Runnable timeoutRunnable;
+    String encryptedData="";
 
     // Length of time to allow advertising before automatically shutting off. (10 minutes)
     private long TIMEOUT = TimeUnit.MILLISECONDS.convert(10, TimeUnit.MINUTES);
@@ -47,6 +51,13 @@ public class AdvertiserService extends Service {
         startAdvertising();
         setTimeout();
         super.onCreate();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+        encryptedData = intent.getStringExtra("advertisedString");
+        return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
@@ -129,11 +140,6 @@ public class AdvertiserService extends Service {
         }
     }
 
-    /**
-     * Move service to the foreground, to avoid execution limits on background processes.
-     *
-     * Callers should call stopForeground(true) when background work is complete.
-     */
     private void goForeground() {
         Intent notificationIntent = new Intent(this, ServerActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
@@ -168,7 +174,8 @@ public class AdvertiserService extends Service {
          */
 
         AdvertiseData.Builder dataBuilder = new AdvertiseData.Builder();
-        dataBuilder.addServiceUuid(Constant.Service_UUID);
+//        dataBuilder.addServiceUuid(Constant.Service_UUID);
+        dataBuilder.addServiceData(Constant.Service_UUID,encryptedData.getBytes());
         dataBuilder.setIncludeDeviceName(true);
 
         return dataBuilder.build();
