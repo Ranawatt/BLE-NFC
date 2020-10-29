@@ -54,6 +54,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_ble" />
 
+
     <Button
         android:id="@+id/button_encrypt"
         android:layout_width="@dimen/dimen_185"
@@ -63,6 +64,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_nfc"
-        app:layout_constraintVertical_bias="0.522" />
+        app:layout_constraintVertical_bias="0.341" />
+
+    <FrameLayout
+        android:id="@+id/advertiser_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

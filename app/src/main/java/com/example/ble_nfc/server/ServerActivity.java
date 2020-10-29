@@ -1,6 +1,7 @@
 package com.example.ble_nfc.server;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ble_nfc.fragment.AdvertiserFragment;
 import com.example.ble_nfc.service.AdvertiserService;
 import com.example.ble_nfc.util.AES;
 import com.example.ble_nfc.R;
@@ -83,7 +85,7 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
             if (mBluetoothAdapter != null) {
                 if (mBluetoothAdapter.isEnabled()){
                     if (mBluetoothAdapter.isMultipleAdvertisementSupported()){
-                        startAdvertising();
+                        setUpAdvertising();
                     }
                 }else{
                     // Prompt user to turn on Bluetooth
@@ -117,6 +119,14 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
+    private void setUpAdvertising() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        AdvertiserFragment advertiserFragment = new AdvertiserFragment();
+        transaction.replace(R.id.advertiser_container, advertiserFragment);
+
+        transaction.commit();
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -127,7 +137,7 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
                 if (resultCode == RESULT_OK) {
                     // Bluetooth is now Enabled, are Bluetooth Advertisements supported on this device?
                     if (mBluetoothAdapter.isMultipleAdvertisementSupported()) {
-                        startAdvertising();
+                        setUpAdvertising();
                     } else {
                         // Bluetooth Advertisements are not supported.
                         Toast.makeText(this,R.string.bt_ads_not_supported,Toast.LENGTH_SHORT).show();
@@ -142,11 +152,11 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private void startAdvertising() {
-        Intent serviceIntent = new Intent(this, AdvertiserService.class);
-        serviceIntent.putExtra("advertisedString",tvEncrypt.getText().toString());
-        startService(serviceIntent);
-    }
+//    private void startAdvertising() {
+//        Intent serviceIntent = new Intent(this, AdvertiserService.class);
+//        serviceIntent.putExtra("advertisedString",tvEncrypt.getText().toString());
+//        startService(serviceIntent);
+//    }
 
     private void sendEncryptedData() {
         mHCEManager = new HCEManager(new HCEManager.HCEListener() {
