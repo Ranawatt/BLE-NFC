@@ -19,6 +19,10 @@ import android.widget.Toast;
 
 import androidx.fragment.app.ListFragment;
 
+import com.example.ble_nfc.R;
+import com.example.ble_nfc.adapter.ScanResultAdapter;
+import com.example.ble_nfc.util.Constant;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -39,11 +43,6 @@ public class ScannerFragment extends ListFragment {
 
     private Handler mHandler;
 
-    /**
-     * Must be called after object creation by MainActivity.
-     *
-     * @param btAdapter the local BluetoothAdapter
-     */
     public void setBluetoothAdapter(BluetoothAdapter btAdapter) {
         this.mBluetoothAdapter = btAdapter;
         mBluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
@@ -54,16 +53,9 @@ public class ScannerFragment extends ListFragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setRetainInstance(true);
-
-        // Use getActivity().getApplicationContext() instead of just getActivity() because this
-        // object lives in a fragment and needs to be kept separate from the Activity lifecycle.
-        //
-        // We could get a LayoutInflater from the ApplicationContext but it messes with the
-        // default theme, so generate it from getActivity() and pass it in separately.
         mAdapter = new ScanResultAdapter(getActivity().getApplicationContext(),
                 LayoutInflater.from(getActivity()));
         mHandler = new Handler();
-
     }
 
     @Override
@@ -82,7 +74,6 @@ public class ScannerFragment extends ListFragment {
         getListView().setDividerHeight(0);
 
         setEmptyText(getString(R.string.empty_list));
-        // Trigger refresh on app's 1st load
         startScanning();
     }
 
@@ -103,22 +94,14 @@ public class ScannerFragment extends ListFragment {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    /**
-     * Start scanning for BLE Advertisements (& set it up to stop after a set period of time).
-     */
+    // Start scanning for BLE Advertisements.
     public void startScanning() {
         if (mScanCallback == null) {
             Log.d(TAG, "Starting Scanning");
-            // Will stop the scanning after a set time.
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
+            mHandler.postDelayed(()-> {
                     stopScanning();
-                }
             }, SCAN_PERIOD);
 
-            // Kick off a new scan.
             mScanCallback = new SampleScanCallback();
             mBluetoothLeScanner.startScan(buildScanFilters(), buildScanSettings(), mScanCallback);
 
@@ -130,53 +113,37 @@ public class ScannerFragment extends ListFragment {
             Toast.makeText(getActivity(), R.string.already_scanning, Toast.LENGTH_SHORT);
         }
     }
-
-    /**
-     * Stop scanning for BLE Advertisements.
-     */
+    // Stop scanning for BLE Advertisements.
     public void stopScanning() {
         Log.d(TAG, "Stopping Scanning");
-
-        // Stop the scan, wipe the callback.
         mBluetoothLeScanner.stopScan(mScanCallback);
         mScanCallback = null;
 
-        // Even if no new results, update 'last seen' times.
         mAdapter.notifyDataSetChanged();
     }
 
-    /**
-     * Return a List of {@link ScanFilter} objects to filter by Service UUID.
-     */
     private List<ScanFilter> buildScanFilters() {
         List<ScanFilter> scanFilters = new ArrayList<>();
 
         ScanFilter.Builder builder = new ScanFilter.Builder();
-        // Comment out the below line to see all BLE devices around you
-        builder.setServiceUuid(Constants.Service_UUID);
+        builder.setServiceUuid(Constant.Service_UUID);
         scanFilters.add(builder.build());
 
         return scanFilters;
     }
-
-    /**
-     * Return a {@link ScanSettings} object set to use low power (to preserve battery life).
-     */
+    // set to use low power (to preserve battery life).
     private ScanSettings buildScanSettings() {
         ScanSettings.Builder builder = new ScanSettings.Builder();
         builder.setScanMode(ScanSettings.SCAN_MODE_LOW_POWER);
         return builder.build();
     }
 
-    /**
-     * Custom ScanCallback object - adds to adapter on success, displays error on failure.
-     */
+    // Custom ScanCallback object - adds to adapter on success, displays error on failure.
     private class SampleScanCallback extends ScanCallback {
 
         @Override
         public void onBatchScanResults(List<ScanResult> results) {
             super.onBatchScanResults(results);
-
             for (ScanResult result : results) {
                 mAdapter.add(result);
             }
@@ -186,7 +153,6 @@ public class ScannerFragment extends ListFragment {
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
             super.onScanResult(callbackType, result);
-
             mAdapter.add(result);
             mAdapter.notifyDataSetChanged();
         }
@@ -194,8 +160,7 @@ public class ScannerFragment extends ListFragment {
         @Override
         public void onScanFailed(int errorCode) {
             super.onScanFailed(errorCode);
-            Toast.makeText(getActivity(), "Scan failed with error: " + errorCode, Toast.LENGTH_LONG)
-                    .show();
+            Toast.makeText(getActivity(), "Scan failed with error: " + errorCode, Toast.LENGTH_LONG).show();
         }
     }
 }
