@@ -99,8 +99,6 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
                 finish();
                 return;
             }
-
-//            startActivity(new Intent(this, ClientActivity.class));
         }
 
         if (v.getId() == R.id.button_nfc){

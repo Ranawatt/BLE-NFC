@@ -11,18 +11,13 @@ import android.bluetooth.le.AdvertiseSettings;
 import android.bluetooth.le.BluetoothLeAdvertiser;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
-
-import androidx.annotation.RequiresApi;
-
 import com.example.ble_nfc.R;
 import com.example.ble_nfc.server.ServerActivity;
 import com.example.ble_nfc.util.Constant;
-
 import java.util.concurrent.TimeUnit;
 
 public class AdvertiserService extends Service {
@@ -63,8 +58,7 @@ public class AdvertiserService extends Service {
     public void onDestroy() {
         /**
          * Note that onDestroy is not guaranteed to be called quickly or at all. Services exist at
-         * the whim of the system, and onDestroy can be delayed or skipped entirely if memory need
-         * is critical.
+         * the whim of the system, and onDestroy can be delayed or skipped entirely if memory need is critical.
          */
         running = false;
         stopAdvertising();
@@ -74,17 +68,14 @@ public class AdvertiserService extends Service {
     }
 
     /**
-     * Required for extending service, but this will be a Started Service only, so no need for
-     * binding.
+     * Required for extending service, but this will be a Started Service only, so no need for binding.
      */
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
 
-    /**
-     * Get references to system Bluetooth objects if we don't have them already.
-     */
+    // Get references to system Bluetooth objects if we don't have them already.
     private void initialize() {
         if (mBluetoothLeAdvertiser == null) {
             BluetoothManager mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
@@ -119,14 +110,10 @@ public class AdvertiserService extends Service {
         mHandler.postDelayed(timeoutRunnable, TIMEOUT);
     }
 
-    /**
-     * Starts BLE Advertising.
-     */
     private void startAdvertising() {
         goForeground();
 
         Log.d(TAG, "Service: Starting Advertising");
-
         if (mAdvertiseCallback == null) {
             AdvertiseSettings settings = buildAdvertiseSettings();
             AdvertiseData data = buildAdvertiseData();
@@ -181,7 +168,6 @@ public class AdvertiserService extends Service {
         settingsBuilder.setTimeout(0);
         return settingsBuilder.build();
     }
-
     /**
      * Custom callback after Advertising succeeds or fails to start. Broadcasts the error code
      * in an Intent to be picked up by AdvertiserFragment and stops this Service.
@@ -204,7 +190,6 @@ public class AdvertiserService extends Service {
             Log.d(TAG, "Advertising successfully started");
         }
     }
-
     /**
      * Builds and sends a broadcast intent indicating Advertising has failed. Includes the error
      * code as an extra. This is intended to be picked up by the {@code AdvertiserFragment}.
