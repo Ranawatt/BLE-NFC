@@ -30,8 +30,7 @@ public class AdvertiserService extends Service {
     private static final String TAG = AdvertiserService.class.getSimpleName();
     private static final int FOREGROUND_NOTIFICATION_ID = 1;
     public static boolean running = false;
-    public static final String ADVERTISING_FAILED =
-            "com.example.android.advertising_failed";
+    public static final String ADVERTISING_FAILED = "com.example.android.advertising_failed";
     public static final String ADVERTISING_FAILED_EXTRA_CODE = "failureCode";
     public static final int ADVERTISING_TIMED_OUT = 6;
 
@@ -39,7 +38,7 @@ public class AdvertiserService extends Service {
     private AdvertiseCallback mAdvertiseCallback;
     private Handler mHandler;
     private Runnable timeoutRunnable;
-    String encryptedData="";
+//    String encryptedData="";
 
     // Length of time to allow advertising before automatically shutting off. (10 minutes)
     private long TIMEOUT = TimeUnit.MILLISECONDS.convert(10, TimeUnit.MINUTES);
@@ -53,12 +52,12 @@ public class AdvertiserService extends Service {
         super.onCreate();
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-
-        encryptedData = intent.getStringExtra("advertisedString");
-        return super.onStartCommand(intent, flags, startId);
-    }
+//    @Override
+//    public int onStartCommand(Intent intent, int flags, int startId) {
+//
+//        encryptedData = intent.getStringExtra("advertisedString");
+//        return super.onStartCommand(intent, flags, startId);
+//    }
 
     @Override
     public void onDestroy() {
@@ -164,18 +163,9 @@ public class AdvertiserService extends Service {
     // Returns an AdvertiseData object which includes the Service UUID and Device Name.
     private AdvertiseData buildAdvertiseData() {
 
-        /**
-         * Note: There is a strict limit of 31 Bytes on packets sent over BLE Advertisements.
-         *  This includes everything put into AdvertiseData including UUIDs, device info, &
-         *  arbitrary service or manufacturer data.
-         *  Attempting to send packets over this limit will result in a failure with error code
-         *  AdvertiseCallback.ADVERTISE_FAILED_DATA_TOO_LARGE. Catch this error in the
-         *  onStartFailure() method of an AdvertiseCallback implementation.
-         */
-
         AdvertiseData.Builder dataBuilder = new AdvertiseData.Builder();
 //        dataBuilder.addServiceUuid(Constant.Service_UUID);
-        dataBuilder.addServiceData(Constant.Service_UUID,encryptedData.getBytes());
+        dataBuilder.addServiceData(Constant.Service_UUID,Constant.ENCRYPTED_STRING.getBytes());
         dataBuilder.setIncludeDeviceName(true);
 
         return dataBuilder.build();

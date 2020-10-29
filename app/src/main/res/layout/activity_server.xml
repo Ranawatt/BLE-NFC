@@ -67,7 +67,7 @@
         app:layout_constraintVertical_bias="0.341" />
 
     <FrameLayout
-        android:id="@+id/advertiser_fragment_container"
+        android:id="@+id/advertiser_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent" />

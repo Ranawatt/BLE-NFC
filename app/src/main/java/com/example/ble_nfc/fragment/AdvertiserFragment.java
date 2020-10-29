@@ -22,11 +22,7 @@ import com.example.ble_nfc.service.AdvertiserService;
  */
 public class AdvertiserFragment extends Fragment implements View.OnClickListener {
 
-    /**
-     * Lets user toggle BLE Advertising.
-     */
     private Switch mSwitch;
-
     /**
      * Listens for notifications that the {@code AdvertiserService} has failed to start advertising.
      * This Receiver deals with Fragment UI elements and only needs to be active when the Fragment
@@ -85,6 +81,8 @@ public class AdvertiserFragment extends Fragment implements View.OnClickListener
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_advertiser, container, false);
+        mSwitch = view.findViewById(R.id.advertise_switch);
+        mSwitch.setOnClickListener(this);
 
         return view;
     }
@@ -96,37 +94,24 @@ public class AdvertiserFragment extends Fragment implements View.OnClickListener
         getActivity().registerReceiver(advertisingFailureReceiver, failureFilter);
 
     }
-
-    /**
-     * When app goes off screen, unregister the Advertising failure Receiver to stop memory leaks.
-     * (and because the app doesn't care if Advertising fails while the UI isn't active)
-     */
+    // When app goes off screen, unregister the Advertising failure Receiver to stop memory leaks.
     @Override
     public void onPause() {
         super.onPause();
         getActivity().unregisterReceiver(advertisingFailureReceiver);
     }
 
-    /**
-     * Returns Intent addressed to the {@code AdvertiserService} class.
-     */
     private static Intent getServiceIntent(Context c) {
         return new Intent(c, AdvertiserService.class);
     }
 
-    /**
-     * Called when switch is toggled - starts or stops advertising.
-     */
     @Override
     public void onClick(View v) {
-        // Is the toggle on?
         boolean on = ((Switch) v).isChecked();
-
-        if (on) {
+        if (on)
             startAdvertising();
-        } else {
-            stopAdvertising();
-        }
+
+        stopAdvertising();
     }
 
     /**

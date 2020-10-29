@@ -71,6 +71,7 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
             String originalStr = etValue.getText().toString().trim();
             String encryptedString = AES.encrypt(originalStr, secretKey) ;
             tvEncrypt.setText(encryptedString);
+            Constant.ENCRYPTED_STRING = encryptedString;
         }
         if(v.getId() == R.id.button_ble){
             if (!getPackageManager().hasSystemFeature(
