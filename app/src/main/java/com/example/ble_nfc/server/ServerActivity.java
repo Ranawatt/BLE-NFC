@@ -29,8 +29,6 @@ import static com.example.ble_nfc.util.Utils.READER_FLAGS;
 
 public class ServerActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static String secretKey = "60CA0C1AC45776EF7C42C958F2A009107348D0F3B858F32691B3EABF3DC5B2FF";
-
     private EditText etValue;
     private TextView tvEncrypt;
     private Button btnEncrypt, btnBle, btnNfc;
@@ -69,7 +67,7 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
 
         if (v.getId() == R.id.button_encrypt){
             String originalStr = etValue.getText().toString().trim();
-            String encryptedString = AES.encrypt(originalStr, secretKey) ;
+            String encryptedString = AES.encrypt(originalStr, Constant.secretKey) ;
             tvEncrypt.setText(encryptedString);
             Constant.ENCRYPTED_STRING = encryptedString;
         }

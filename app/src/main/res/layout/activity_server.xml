@@ -35,10 +35,10 @@
         app:layout_constraintTop_toBottomOf="@+id/et_value" />
 
     <Button
-        android:id="@+id/button_ble"
+        android:id="@+id/button_encrypt"
         android:layout_width="@dimen/dimen_185"
         android:layout_height="wrap_content"
-        android:text="@string/button_ble"
+        android:text="@string/btn_encrypt"
         android:layout_marginTop="@dimen/dimen_80"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,14 +52,14 @@
         android:text="@string/button_nfc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_ble" />
+        app:layout_constraintTop_toBottomOf="@+id/button_encrypt" />
 
 
     <Button
-        android:id="@+id/button_encrypt"
+        android:id="@+id/button_ble"
         android:layout_width="@dimen/dimen_185"
         android:layout_height="wrap_content"
-        android:text="@string/btn_encrypt"
+        android:text="@string/button_ble"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

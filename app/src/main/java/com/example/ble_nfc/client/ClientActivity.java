@@ -5,18 +5,13 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothManager;
-import android.bluetooth.le.BluetoothLeScanner;
-import android.bluetooth.le.ScanFilter;
-import android.bluetooth.le.ScanSettings;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -27,21 +22,13 @@ import com.example.ble_nfc.fragment.ScannerFragment;
 import com.example.ble_nfc.util.AES;
 import com.example.ble_nfc.R;
 import com.example.ble_nfc.util.Constant;
-import java.util.List;
 
 public class ClientActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static String secretKey = "60CA0C1AC45776EF7C42C958F2A009107348D0F3B858F32691B3EABF3DC5B2FF";
     private TextView tvEncrypt, tvDecrypt;
     private Button btnBle, btnNfc;
     private BluetoothAdapter mBluetoothAdapter;
     private int REQUEST_ENABLE_BT = 1;
-    private Handler mHandler;
-    private static final long SCAN_PERIOD = 10000;
-    private BluetoothLeScanner mLEScanner;
-    private ScanSettings settings;
-    private List<ScanFilter> filters;
-    private BluetoothGatt mGatt;
 
     ServiceReceiver serviceReceiver;
     @Override
@@ -61,7 +48,7 @@ public class ClientActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         if (v.getId() == R.id.btnBle){
             String originalString = "";
-            String encryptedString = AES.encrypt(originalString, secretKey) ;
+            String encryptedString = AES.encrypt(originalString, Constant.secretKey) ;
             tvEncrypt.setText(encryptedString);
             if (!getPackageManager().hasSystemFeature(
                     PackageManager.FEATURE_BLUETOOTH_LE)) {
@@ -74,7 +61,7 @@ public class ClientActivity extends AppCompatActivity implements View.OnClickLis
             if (mBluetoothAdapter != null) {
                 if (mBluetoothAdapter.isEnabled()){
                     if (mBluetoothAdapter.isMultipleAdvertisementSupported()){
-                        setUpAdvertising();
+                        setUpScanning();
                     }
                 }else{
                     // Prompt user to turn on Bluetooth
@@ -99,7 +86,7 @@ public class ClientActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private void setUpAdvertising() {
+    private void setUpScanning() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         ScannerFragment scannerFragment = new ScannerFragment();
         // Fragments can't access system services directly, so pass it the BluetoothAdapter

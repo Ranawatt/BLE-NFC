@@ -34,7 +34,7 @@ public class ScannerFragment extends ListFragment {
 
     private static final String TAG = ScannerFragment.class.getSimpleName();
     // Stops scanning after 5 seconds.
-    private static final long SCAN_PERIOD = 5000;
+    private static final long SCAN_PERIOD = 3000;
 
     private BluetoothAdapter mBluetoothAdapter;
     private BluetoothLeScanner mBluetoothLeScanner;

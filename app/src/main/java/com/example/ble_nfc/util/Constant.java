@@ -9,6 +9,7 @@ public class Constant {
     public static final ParcelUuid Service_UUID = ParcelUuid
             .fromString("0000b81d-0000-1000-8000-00805f9b34fb");
 
+    public static String secretKey = "60CA0C1AC45776EF7C42C958F2A009107348D0F3B858F32691B3EABF3DC5B2FF";
     public static final int REQUEST_ENABLE_BT = 1;
 
     public static String ENCRYPTED_STRING = "";
