@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ble_nfc.BLE_NFC;
 import com.example.ble_nfc.fragment.AdvertiserFragment;
 import com.example.ble_nfc.service.AdvertiserService;
 import com.example.ble_nfc.util.AES;
@@ -76,8 +77,7 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
         if(v.getId() == R.id.button_ble){
             if (!getPackageManager().hasSystemFeature(
                     PackageManager.FEATURE_BLUETOOTH_LE)) {
-                Toast.makeText(this, R.string.ble_not_supported, Toast.LENGTH_SHORT)
-                        .show();
+                Toast.makeText(this, R.string.ble_not_supported, Toast.LENGTH_SHORT).show();
                 finish();
             }
             final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
@@ -106,14 +106,12 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
                 Toast.makeText(this,"Encrypt First",Toast.LENGTH_LONG).show();
             }else{
                 String data = tvEncrypt.getText().toString();
+                sendEncryptedData();
                 enableReaderMode();
                 if (data.isEmpty())
                     Toast.makeText(this, "Encrypt the message to send", Toast.LENGTH_SHORT).show();
                 mHCEManager.setData(data.getBytes());
-
-                sendEncryptedData();
             }
-
         }
 
         if (v.getId() == R.id.button_scan){
@@ -126,7 +124,6 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         AdvertiserFragment advertiserFragment = new AdvertiserFragment();
         transaction.replace(R.id.advertiser_container, advertiserFragment);
-
         transaction.commit();
     }
 
@@ -154,12 +151,6 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
                 super.onActivityResult(requestCode, resultCode, data);
         }
     }
-
-//    private void startAdvertising() {
-//        Intent serviceIntent = new Intent(this, AdvertiserService.class);
-//        serviceIntent.putExtra("advertisedString",tvEncrypt.getText().toString());
-//        startService(serviceIntent);
-//    }
 
     private void sendEncryptedData() {
         mHCEManager = new HCEManager(new HCEManager.HCEListener() {

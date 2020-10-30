@@ -55,7 +55,6 @@ public class HCEManager implements NfcAdapter.ReaderCallback {
         int dataLength = data.length;
 
         /**
-         * First command
          * 00 00 00 00 | 00 00 XX XX (data length)
          */
         byte[] command = ByteUtils.HexStringToByteArray(ByteUtils.IntToHexString(0) + ByteUtils.IntToHexString(dataLength));
@@ -77,11 +76,9 @@ public class HCEManager implements NfcAdapter.ReaderCallback {
             start += chunkSize;
         }
     }
-
     /**
      * Callback when a new tag is discovered by the system.
      * Communication with the card should take place here.
-     * @param tag Discovered tag
      */
     @Override
     public void onTagDiscovered(Tag tag) {
