@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,7 +24,7 @@ import com.example.ble_nfc.util.AES;
 import com.example.ble_nfc.R;
 import com.example.ble_nfc.util.Constant;
 
-public class ClientActivity extends AppCompatActivity implements View.OnClickListener {
+public class ClientActivity extends AppCompatActivity implements View.OnClickListener, ScannerFragment.OnReceivedText {
 
     private TextView tvEncrypt, tvDecrypt;
     private Button btnBle, btnNfc;
@@ -47,9 +48,7 @@ public class ClientActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btnBle){
-            String originalString = "";
-            String encryptedString = AES.encrypt(originalString, Constant.secretKey) ;
-            tvEncrypt.setText(encryptedString);
+
             if (!getPackageManager().hasSystemFeature(
                     PackageManager.FEATURE_BLUETOOTH_LE)) {
                 Toast.makeText(this, R.string.ble_not_supported, Toast.LENGTH_SHORT).show();
@@ -75,6 +74,9 @@ public class ClientActivity extends AppCompatActivity implements View.OnClickLis
                 return;
             }
 
+            String encryptedString = tvEncrypt.getText().toString();
+            String decryptedString = AES.decrypt(encryptedString, Constant.secretKey);
+            tvDecrypt.setText(decryptedString);
         }
         if (v.getId() == R.id.btnNfc){
             String originalString = tvEncrypt.getText().toString().trim();
@@ -127,6 +129,12 @@ public class ClientActivity extends AppCompatActivity implements View.OnClickLis
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onReceivedText(String receivedText) {
+        Log.d("Received Data  ",receivedText);
+        tvEncrypt.setText(receivedText);
     }
 
     private class ServiceReceiver extends BroadcastReceiver {

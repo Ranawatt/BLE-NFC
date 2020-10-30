@@ -31,7 +31,7 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
 
     private EditText etValue;
     private TextView tvEncrypt;
-    private Button btnEncrypt, btnBle, btnNfc;
+    private Button btnEncrypt, btnScan, btnBle, btnNfc;
     private BluetoothAdapter mBluetoothAdapter;
     public HCEManager mHCEManager;
 
@@ -49,6 +49,7 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
         tvEncrypt = findViewById(R.id.tv_encrypted);
         btnBle = findViewById(R.id.button_ble);
         btnNfc = findViewById(R.id.button_nfc);
+        btnScan = findViewById(R.id.button_scan);
         btnEncrypt = findViewById(R.id.button_encrypt);
     }
     private void initListener() {
@@ -59,6 +60,7 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
             btnBle.setOnClickListener(this);
             btnNfc.setOnClickListener(this);
 //        }
+        btnScan.setOnClickListener(this);
     }
 
 
@@ -112,6 +114,10 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
                 sendEncryptedData();
             }
 
+        }
+
+        if (v.getId() == R.id.button_scan){
+            startActivity(new Intent(this, ClientActivity.class));
         }
 
     }

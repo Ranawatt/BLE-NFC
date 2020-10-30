@@ -24,7 +24,7 @@
         android:id="@+id/tv_encrypted"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_135"
+        android:layout_marginTop="@dimen/dimen_80"
         android:text="@string/text_encrypted"
         android:textSize="@dimen/text_24"
         android:textColor="@color/teal_700"
@@ -39,7 +39,7 @@
         android:layout_width="@dimen/dimen_185"
         android:layout_height="wrap_content"
         android:text="@string/btn_encrypt"
-        android:layout_marginTop="@dimen/dimen_80"
+        android:layout_marginTop="@dimen/dimen_40"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_encrypted" />
@@ -48,8 +48,8 @@
         android:id="@+id/button_nfc"
         android:layout_width="@dimen/dimen_185"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_80"
         android:text="@string/button_nfc"
+        android:layout_marginTop="@dimen/dimen_40"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_encrypt" />
@@ -59,12 +59,21 @@
         android:id="@+id/button_ble"
         android:layout_width="@dimen/dimen_185"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_40"
         android:text="@string/button_ble"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_nfc"
-        app:layout_constraintVertical_bias="0.341" />
+        app:layout_constraintTop_toBottomOf="@+id/button_nfc" />
+
+    <Button
+        android:id="@+id/button_scan"
+        android:layout_width="@dimen/dimen_185"
+        android:layout_height="wrap_content"
+        android:text="@string/button_scan"
+        android:layout_marginTop="@dimen/dimen_40"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_ble" />
 
     <FrameLayout
         android:id="@+id/advertiser_container"

@@ -52,9 +52,9 @@ public class ScanResultAdapter extends BaseAdapter {
             view = mInflater.inflate(R.layout.listitem_scanresult, null);
         }
 
-        TextView deviceNameView = (TextView) view.findViewById(R.id.device_name);
-        TextView deviceAddressView = (TextView) view.findViewById(R.id.device_address);
-        TextView lastSeenView = (TextView) view.findViewById(R.id.last_seen);
+        TextView deviceNameView = view.findViewById(R.id.device_name);
+        TextView deviceAddressView = view.findViewById(R.id.device_address);
+        TextView lastSeenView = view.findViewById(R.id.last_seen);
 
         ScanResult scanResult = mArrayList.get(position);
 
@@ -69,9 +69,8 @@ public class ScanResultAdapter extends BaseAdapter {
         return view;
     }
 
-    /**
-     * Search the adapter for an existing device address and return it, otherwise return -1.
-     */
+
+    // Search the adapter for an existing device address and return it, otherwise return -1.
     private int getPosition(String address) {
         int position = -1;
         for (int i = 0; i < mArrayList.size(); i++) {

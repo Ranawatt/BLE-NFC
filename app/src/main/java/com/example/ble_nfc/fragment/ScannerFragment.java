@@ -6,6 +6,7 @@ import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanFilter;
 import android.bluetooth.le.ScanResult;
 import android.bluetooth.le.ScanSettings;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.ListFragment;
 
 import com.example.ble_nfc.R;
@@ -42,10 +44,17 @@ public class ScannerFragment extends ListFragment {
     private ScanResultAdapter mAdapter;
 
     private Handler mHandler;
+    private OnReceivedText onReceivedText;
 
     public void setBluetoothAdapter(BluetoothAdapter btAdapter) {
         this.mBluetoothAdapter = btAdapter;
         mBluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        onReceivedText = (OnReceivedText) context ;
     }
 
     @Override
@@ -126,7 +135,8 @@ public class ScannerFragment extends ListFragment {
         List<ScanFilter> scanFilters = new ArrayList<>();
 
         ScanFilter.Builder builder = new ScanFilter.Builder();
-        builder.setServiceUuid(Constant.Service_UUID);
+//        builder.setServiceUuid(Constant.Service_UUID);
+        builder.setServiceData(Constant.Service_UUID,Constant.ENCRYPTED_STRING.getBytes());
         scanFilters.add(builder.build());
 
         return scanFilters;
@@ -154,6 +164,8 @@ public class ScannerFragment extends ListFragment {
         public void onScanResult(int callbackType, ScanResult result) {
             super.onScanResult(callbackType, result);
             mAdapter.add(result);
+//            String receivedText = result.getDevice().getAddress();
+
             mAdapter.notifyDataSetChanged();
         }
 
@@ -162,6 +174,10 @@ public class ScannerFragment extends ListFragment {
             super.onScanFailed(errorCode);
             Toast.makeText(getActivity(), "Scan failed with error: " + errorCode, Toast.LENGTH_LONG).show();
         }
+    }
+
+    public interface OnReceivedText {
+        void onReceivedText(String receivedText);
     }
 }
 
