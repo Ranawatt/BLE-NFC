@@ -17,9 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class ScanResultAdapter extends BaseAdapter {
 
     private ArrayList<ScanResult> mArrayList;
-
     private Context mContext;
-
     private LayoutInflater mInflater;
 
     public ScanResultAdapter(Context context, LayoutInflater inflater) {
@@ -46,11 +44,9 @@ public class ScanResultAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-
         // Reuse an old view if we can, otherwise create a new one.
-        if (view == null) {
+        if (view == null)
             view = mInflater.inflate(R.layout.listitem_scanresult, null);
-        }
 
         TextView deviceNameView = view.findViewById(R.id.device_name);
         TextView deviceAddressView = view.findViewById(R.id.device_address);
@@ -91,22 +87,17 @@ public class ScanResultAdapter extends BaseAdapter {
 
         int existingPosition = getPosition(scanResult.getDevice().getAddress());
 
-        if (existingPosition >= 0) {
+        if (existingPosition >= 0)
             // Device is already in list, update its record.
             mArrayList.set(existingPosition, scanResult);
-        } else {
+        else
             // Add new Device's ScanResult to list.
             mArrayList.add(scanResult);
-        }
     }
-
-    /**
-     * Clear out the adapter.
-     */
+    // Clear out the adapter.
     public void clear() {
         mArrayList.clear();
     }
-
     /**
      * Takes in a number of nanoseconds and returns a human-readable string giving a vague
      * description of how long ago that was.
@@ -143,7 +134,6 @@ public class ScanResultAdapter extends BaseAdapter {
                 }
             }
         }
-
         return lastSeenText;
     }
 }

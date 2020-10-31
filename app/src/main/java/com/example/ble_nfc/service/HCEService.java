@@ -94,7 +94,6 @@ public class HCEService extends HostApduService {
                     sendMessage(APDU_ERROR);
                     return STATUS_FAILED;
                 }
-
                 // Write data
             default:
                 Log.e(TAG, ByteUtils.ByteArrayToHexString(commandApdu));

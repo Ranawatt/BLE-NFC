@@ -147,7 +147,6 @@ public class ScannerFragment extends ListFragment {
         builder.setScanMode(ScanSettings.SCAN_MODE_LOW_POWER);
         return builder.build();
     }
-
     // Custom ScanCallback object - adds to adapter on success, displays error on failure.
     private class SampleScanCallback extends ScanCallback {
 
@@ -165,7 +164,6 @@ public class ScannerFragment extends ListFragment {
             super.onScanResult(callbackType, result);
             mAdapter.add(result);
 //            String receivedText = result.getDevice().getAddress();
-
             mAdapter.notifyDataSetChanged();
         }
 

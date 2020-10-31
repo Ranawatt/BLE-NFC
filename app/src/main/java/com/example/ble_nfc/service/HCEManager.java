@@ -32,10 +32,8 @@ public class HCEManager implements NfcAdapter.ReaderCallback {
     private List<byte[]> mCommandArray;
 
     public interface HCEListener {
-
         void onDataSent();
         void onFail(int errorCode);
-
     }
 
     public HCEManager(HCEListener HCEListener) {
@@ -97,7 +95,6 @@ public class HCEManager implements NfcAdapter.ReaderCallback {
             // Connect to the remote NFC device
             isoDep.connect();
             isoDep.setTimeout(TIMEOUT);
-
             // Send SELECT AID command to remote device
             LogI("Connecting AID");
             LogI("Sending: " + APDU_SELECT_AID);
@@ -110,14 +107,12 @@ public class HCEManager implements NfcAdapter.ReaderCallback {
                 mListener.onFail(HCE_ERROR_NOT_CONNECTED);
                 return;
             }
-
             // Check data
             if (mCommandArray.size() == 0) {
                 LogI("Preparing data failed");
                 mListener.onFail(HCE_ERROR_FORMAT_DATA);
                 return;
             }
-
             // Send data
             for (byte[] item : mCommandArray) {
                 // Send command to remote device

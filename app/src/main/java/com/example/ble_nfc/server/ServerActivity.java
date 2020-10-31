@@ -126,7 +126,6 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case Constant.REQUEST_ENABLE_BT:
-
                 if (resultCode == RESULT_OK) {
                     // Bluetooth is now Enabled, are Bluetooth Advertisements supported on this device?
                     if (mBluetoothAdapter.isMultipleAdvertisementSupported()) {
