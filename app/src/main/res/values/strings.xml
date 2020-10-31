@@ -12,7 +12,7 @@
 
     <string name="service_desc">HCE Service</string>
     <string name="aid_description">Application AID</string>
-    <string name="broadcast_device">Broadcast Device</string>
+    <string name="broadcast_device">Advertise Encrypted Text</string>
     <string name="ble_not_supported">BLE Not Supported</string>
     <string name="error_bluetooth_not_supported">Bluetooth Not Supported</string>
 

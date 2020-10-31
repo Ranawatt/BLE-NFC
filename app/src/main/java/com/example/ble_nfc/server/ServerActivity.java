@@ -55,12 +55,8 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
     }
     private void initListener() {
         btnEncrypt.setOnClickListener(this);
-//        if (tvEncrypt.getText().toString().isEmpty()){
-//            Toast.makeText(this,"Encrypt First",Toast.LENGTH_LONG).show();
-//        }else{
-            btnBle.setOnClickListener(this);
-            btnNfc.setOnClickListener(this);
-//        }
+        btnBle.setOnClickListener(this);
+        btnNfc.setOnClickListener(this);
         btnScan.setOnClickListener(this);
     }
 
@@ -75,6 +71,9 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
             Constant.ENCRYPTED_STRING = encryptedString;
         }
         if(v.getId() == R.id.button_ble){
+            if (tvEncrypt.getText().toString().isEmpty()) {
+                Toast.makeText(this, "Encrypt First", Toast.LENGTH_LONG).show();
+            }
             if (!getPackageManager().hasSystemFeature(
                     PackageManager.FEATURE_BLUETOOTH_LE)) {
                 Toast.makeText(this, R.string.ble_not_supported, Toast.LENGTH_SHORT).show();
