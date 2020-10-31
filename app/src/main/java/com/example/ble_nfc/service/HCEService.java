@@ -56,14 +56,11 @@ public class HCEService extends HostApduService {
         if (commandApdu == null) {
             return STATUS_FAILED;
         }
-
         // Invalid APDU command
         if (commandApdu.length < MIN_APDU_LENGTH) {
             return STATUS_FAILED;
         }
-
         String headers = ByteUtils.GetHeaderFromAPDU(commandApdu);
-
         // Check INS
         switch (headers) {
             // SELECT AID
@@ -85,7 +82,6 @@ public class HCEService extends HostApduService {
                     sendMessage(APDU_ERROR);
                     return STATUS_FAILED;
                 }
-
                 // End to receive data
             case APDU_WRITE_END_CMD:
                 Log.e(TAG, "Received Size: " + dataMessage.length());

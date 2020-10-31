@@ -33,8 +33,6 @@ public class AdvertiserService extends Service {
     private AdvertiseCallback mAdvertiseCallback;
     private Handler mHandler;
     private Runnable timeoutRunnable;
-//    String encryptedData="";
-
     // Length of time to allow advertising before automatically shutting off. (10 minutes)
     private long TIMEOUT = TimeUnit.MILLISECONDS.convert(10, TimeUnit.MINUTES);
 
@@ -46,13 +44,6 @@ public class AdvertiserService extends Service {
         setTimeout();
         super.onCreate();
     }
-
-//    @Override
-//    public int onStartCommand(Intent intent, int flags, int startId) {
-//
-//        encryptedData = intent.getStringExtra("advertisedString");
-//        return super.onStartCommand(intent, flags, startId);
-//    }
 
     @Override
     public void onDestroy() {
@@ -67,9 +58,7 @@ public class AdvertiserService extends Service {
         super.onDestroy();
     }
 
-    /**
-     * Required for extending service, but this will be a Started Service only, so no need for binding.
-     */
+    // Required for extending service, but this will be a Started Service only, so no need for binding.
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -81,48 +70,37 @@ public class AdvertiserService extends Service {
             BluetoothManager mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
             if (mBluetoothManager != null) {
                 BluetoothAdapter mBluetoothAdapter = mBluetoothManager.getAdapter();
-                if (mBluetoothAdapter != null) {
+                if (mBluetoothAdapter != null)
                     mBluetoothLeAdvertiser = mBluetoothAdapter.getBluetoothLeAdvertiser();
-                } else {
+                else
                     Toast.makeText(this, getString(R.string.bt_null), Toast.LENGTH_LONG).show();
-                }
             } else {
                 Toast.makeText(this, getString(R.string.bt_null), Toast.LENGTH_LONG).show();
             }
         }
-
     }
 
-    /**
-     * Starts a delayed Runnable that will cause the BLE Advertising to timeout and stop after a
-     * set amount of time.
-     */
+    // Starts a delayed Runnable that will cause the BLE Advertising to timeout and stop after a set amount of time.
     private void setTimeout(){
         mHandler = new Handler();
-        timeoutRunnable = new Runnable() {
-            @Override
-            public void run() {
+        timeoutRunnable = () -> {
                 Log.d(TAG, "AdvertiserService has reached timeout of "+TIMEOUT+" milliseconds, stopping advertising.");
                 sendFailureIntent(ADVERTISING_TIMED_OUT);
                 stopSelf();
-            }
         };
         mHandler.postDelayed(timeoutRunnable, TIMEOUT);
     }
 
     private void startAdvertising() {
         goForeground();
-
         Log.d(TAG, "Service: Starting Advertising");
         if (mAdvertiseCallback == null) {
             AdvertiseSettings settings = buildAdvertiseSettings();
             AdvertiseData data = buildAdvertiseData();
             mAdvertiseCallback = new SampleAdvertiseCallback();
 
-            if (mBluetoothLeAdvertiser != null) {
-                mBluetoothLeAdvertiser.startAdvertising(settings, data,
-                        mAdvertiseCallback);
-            }
+            if (mBluetoothLeAdvertiser != null)
+                mBluetoothLeAdvertiser.startAdvertising(settings, data, mAdvertiseCallback);
         }
     }
 
@@ -141,15 +119,13 @@ public class AdvertiserService extends Service {
 
     private void stopAdvertising() {
         Log.d(TAG, "Service: Stopping Advertising");
-        if (mBluetoothLeAdvertiser != null) {
+        if (mBluetoothLeAdvertiser != null)
             mBluetoothLeAdvertiser.stopAdvertising(mAdvertiseCallback);
             mAdvertiseCallback = null;
-        }
     }
 
     // Returns an AdvertiseData object which includes the Service UUID and Device Name.
     private AdvertiseData buildAdvertiseData() {
-
         AdvertiseData.Builder dataBuilder = new AdvertiseData.Builder();
 //        dataBuilder.addServiceUuid(Constant.Service_UUID);
         dataBuilder.addServiceData(Constant.Service_UUID,Constant.ENCRYPTED_STRING.getBytes());
@@ -177,11 +153,9 @@ public class AdvertiserService extends Service {
         @Override
         public void onStartFailure(int errorCode) {
             super.onStartFailure(errorCode);
-
             Log.d(TAG, "Advertising failed");
             sendFailureIntent(errorCode);
             stopSelf();
-
         }
 
         @Override
@@ -200,5 +174,4 @@ public class AdvertiserService extends Service {
         failureIntent.putExtra(ADVERTISING_FAILED_EXTRA_CODE, errorCode);
         sendBroadcast(failureIntent);
     }
-
 }

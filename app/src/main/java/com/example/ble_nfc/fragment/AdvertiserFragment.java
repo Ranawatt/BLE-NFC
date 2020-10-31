@@ -17,14 +17,12 @@ import androidx.fragment.app.Fragment;
 import com.example.ble_nfc.R;
 import com.example.ble_nfc.service.AdvertiserService;
 
-/**
- * Allows user to start & stop Bluetooth LE Advertising of their device.
- */
+// Allows user to start & stop Bluetooth LE Advertising of their device.
 public class AdvertiserFragment extends Fragment implements View.OnClickListener {
 
     private Switch mSwitch;
     /**
-     * Listens for notifications that the {@code AdvertiserService} has failed to start advertising.
+     * Listens for notifications that has failed to start advertising.
      * This Receiver deals with Fragment UI elements and only needs to be active when the Fragment
      * is on-screen, so it's defined and registered in code instead of the Manifest.
      */
@@ -44,7 +42,6 @@ public class AdvertiserFragment extends Fragment implements View.OnClickListener
             public void onReceive(Context context, Intent intent) {
 
                 int errorCode = intent.getIntExtra(AdvertiserService.ADVERTISING_FAILED_EXTRA_CODE, -1);
-
                 mSwitch.setChecked(false);
 
                 String errorMessage = getString(R.string.start_error_prefix);
@@ -70,20 +67,17 @@ public class AdvertiserFragment extends Fragment implements View.OnClickListener
                     default:
                         errorMessage += " " + getString(R.string.start_error_unknown);
                 }
-
                 Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
             }
         };
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_advertiser, container, false);
         mSwitch = view.findViewById(R.id.advertise_switch);
         mSwitch.setOnClickListener(this);
-
         return view;
     }
 
@@ -92,7 +86,6 @@ public class AdvertiserFragment extends Fragment implements View.OnClickListener
         super.onResume();
         IntentFilter failureFilter = new IntentFilter(AdvertiserService.ADVERTISING_FAILED);
         getActivity().registerReceiver(advertisingFailureReceiver, failureFilter);
-
     }
     // When app goes off screen, unregister the Advertising failure Receiver to stop memory leaks.
     @Override
@@ -110,25 +103,18 @@ public class AdvertiserFragment extends Fragment implements View.OnClickListener
         boolean on = ((Switch) v).isChecked();
         if (on)
             startAdvertising();
-
-        stopAdvertising();
+        else
+            stopAdvertising();
     }
-
-    /**
-     * Starts BLE Advertising by starting {@code AdvertiserService}.
-     */
+    // Starts BLE Advertising by starting
     private void startAdvertising() {
         Context c = getActivity();
         c.startService(getServiceIntent(c));
     }
-
-    /**
-     * Stops BLE Advertising by stopping {@code AdvertiserService}.
-     */
+    // Stops BLE Advertising by stopping
     private void stopAdvertising() {
         Context c = getActivity();
         c.stopService(getServiceIntent(c));
         mSwitch.setChecked(false);
     }
-
 }

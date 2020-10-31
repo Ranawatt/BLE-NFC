@@ -6,4 +6,7 @@
     <string name="ntn_advertiser">ADVERTISER - MODE</string>
     <string name="advertiser">BLE - NFC  Advertiser</string>
     <string name="scanner">BLE - NFC  Scanner</string>
+    <string name="encrypt_first">Encrypt First</string>
+    <string name="encrypt_text_enter">Enter text to encrypt</string>
+    <string name="encrypt_msg">Encrypt the message to send</string>
 </resources>

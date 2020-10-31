@@ -59,7 +59,7 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
 
         if (v.getId() == R.id.button_encrypt){
             if (etValue.getText().toString().isEmpty()) {
-                Toast.makeText(this, "Enter text to encrypt", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.encrypt_text_enter, Toast.LENGTH_LONG).show();
                 return;
             }
             String originalStr = etValue.getText().toString().trim();
@@ -69,7 +69,7 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
         }
         if(v.getId() == R.id.button_ble){
             if (tvEncrypt.getText().toString().isEmpty()) {
-                Toast.makeText(this, "Encrypt First", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.encrypt_first, Toast.LENGTH_LONG).show();
                 return;
             }
             if (!getPackageManager().hasSystemFeature(
@@ -100,21 +100,19 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
 
         if (v.getId() == R.id.button_nfc){
             if (tvEncrypt.getText().toString().isEmpty()){
-                Toast.makeText(this,"Encrypt First",Toast.LENGTH_LONG).show();
+                Toast.makeText(this,R.string.encrypt_first,Toast.LENGTH_LONG).show();
                 return;
             }else{
                 String data = tvEncrypt.getText().toString();
                 sendEncryptedData();
                 enableReaderMode();
                 if (data.isEmpty())
-                    Toast.makeText(this, "Encrypt the message to send", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.encrypt_msg, Toast.LENGTH_SHORT).show();
                 mHCEManager.setData(data.getBytes());
             }
         }
-        if (v.getId() == R.id.button_scan){
+        if (v.getId() == R.id.button_scan)
             startActivity(new Intent(this, ClientActivity.class));
-        }
-
     }
     private void setUpAdvertising() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

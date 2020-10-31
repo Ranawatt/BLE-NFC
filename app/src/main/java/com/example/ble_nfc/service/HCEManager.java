@@ -14,7 +14,6 @@ import java.util.List;
 
 /**
  * Callback class, invoked when an NFC card is scanned while the device is running in reader mode.
- * <p>
  * Reader mode can be invoked by calling NfcAdapter
  */
 public class HCEManager implements NfcAdapter.ReaderCallback {
@@ -46,7 +45,6 @@ public class HCEManager implements NfcAdapter.ReaderCallback {
 
     public void setData(byte[] data) {
         mCommandArray.clear();
-
         // Preparing data
         if (data == null || data.length == 0) {
             mListener.onFail(HCE_ERROR_FORMAT_DATA);
@@ -155,7 +153,6 @@ public class HCEManager implements NfcAdapter.ReaderCallback {
         }
         return !Arrays.equals(bytes, new byte[]{(byte) 0x90, (byte) 0x00});
     }
-
     private void LogI(String msg) {
         Log.i(TAG, msg);
     }
