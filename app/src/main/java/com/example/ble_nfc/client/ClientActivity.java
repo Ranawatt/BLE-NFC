@@ -36,6 +36,7 @@ public class ClientActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client);
+        setTitle(R.string.scanner);
 
         tvEncrypt = findViewById(R.id.text_encrypted);
         tvDecrypt = findViewById(R.id.text_decrypted);

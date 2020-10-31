@@ -39,7 +39,7 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_server);
-
+        setTitle(R.string.advertiser);
         initUi();
         initListener();
     }

@@ -45,4 +45,6 @@
     <string name="advertising_timedout">Advertising stopped due to timeout.</string>
     <string name="button_scan">SCANNER - MODE</string>
     <string name="ntn_advertiser">ADVERTISER - MODE</string>
+    <string name="advertiser">BLE - NFC  Advertiser</string>
+    <string name="scanner">BLE - NFC  Scanner</string>
 </resources>
