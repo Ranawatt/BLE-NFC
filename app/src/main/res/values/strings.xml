@@ -44,4 +44,5 @@
     <string name="start_error_unknown">unknown error</string>
     <string name="advertising_timedout">Advertising stopped due to timeout.</string>
     <string name="button_scan">SCANNER - MODE</string>
+    <string name="ntn_advertiser">ADVERTISER - MODE</string>
 </resources>

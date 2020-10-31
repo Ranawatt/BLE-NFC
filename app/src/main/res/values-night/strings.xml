@@ -3,4 +3,5 @@
     <string name="ble_not_supported">BLE Not Supported</string>
     <string name="error_bluetooth_not_supported">Bluetooth Not Supported</string>
     <string name="button_scan">SCANNER - MODE</string>
+    <string name="ntn_advertiser">ADVERTISER - MODE</string>
 </resources>

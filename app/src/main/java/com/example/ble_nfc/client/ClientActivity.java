@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.ble_nfc.BLE_NFC;
 import com.example.ble_nfc.fragment.ScannerFragment;
+import com.example.ble_nfc.server.ServerActivity;
 import com.example.ble_nfc.util.AES;
 import com.example.ble_nfc.R;
 import com.example.ble_nfc.util.Constant;
@@ -27,7 +28,6 @@ import com.example.ble_nfc.util.Constant;
 public class ClientActivity extends AppCompatActivity implements View.OnClickListener, ScannerFragment.OnReceivedText {
 
     private TextView tvEncrypt, tvDecrypt;
-    private Button btnBle, btnNfc;
     private BluetoothAdapter mBluetoothAdapter;
     private int REQUEST_ENABLE_BT = 1;
 
@@ -39,10 +39,13 @@ public class ClientActivity extends AppCompatActivity implements View.OnClickLis
 
         tvEncrypt = findViewById(R.id.text_encrypted);
         tvDecrypt = findViewById(R.id.text_decrypted);
-        btnBle = findViewById(R.id.btnBle);
-        btnNfc = findViewById(R.id.btnNfc);
-        btnBle.setOnClickListener(this);
-        btnNfc.setOnClickListener(this);
+        initListener();
+    }
+
+    private void initListener() {
+        findViewById(R.id.btnBle).setOnClickListener(this);
+        findViewById(R.id.btnNfc).setOnClickListener(this);
+        findViewById(R.id.btnAdvertise).setOnClickListener(this);
     }
 
     @Override
@@ -79,12 +82,11 @@ public class ClientActivity extends AppCompatActivity implements View.OnClickLis
             tvDecrypt.setText(decryptedString);
         }
         if (v.getId() == R.id.btnNfc){
-            String originalString = tvEncrypt.getText().toString().trim();
-//            String decryptedString = AES.decrypt(originalString, secretKey) ;
-//            tvDecrypt.setText(decryptedString);
             serviceReceiver = new ServiceReceiver();
             registerReceiver(serviceReceiver, new IntentFilter(Constant.ACTION_SERVICE_STATUS));
-
+        }
+        if (v.getId() == R.id.btnAdvertise){
+            startActivity(new Intent(this, ServerActivity.class));
         }
     }
 
@@ -105,6 +107,12 @@ public class ClientActivity extends AppCompatActivity implements View.OnClickLis
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
     @Override
     protected void onPause() {
         super.onPause();

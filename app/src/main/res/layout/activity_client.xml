@@ -40,7 +40,7 @@
         android:id="@+id/btnBle"
         android:layout_width="@dimen/dimen_185"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="@dimen/dimen_80"
         android:text="@string/ble_reader"
         app:layout_constraintBottom_toTopOf="@+id/btnNfc"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,8 +51,18 @@
         android:id="@+id/btnNfc"
         android:layout_width="@dimen/dimen_185"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dimen_115"
+        android:layout_marginBottom="@dimen/dimen_80"
         android:text="@string/nfc_reader"
+        app:layout_constraintBottom_toTopOf="@+id/btnAdvertise"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnAdvertise"
+        android:layout_width="@dimen/dimen_185"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_80"
+        android:text="@string/ntn_advertiser"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -32,7 +32,6 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
 
     private EditText etValue;
     private TextView tvEncrypt;
-    private Button btnEncrypt, btnScan, btnBle, btnNfc;
     private BluetoothAdapter mBluetoothAdapter;
     public HCEManager mHCEManager;
 
@@ -44,27 +43,25 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
         initUi();
         initListener();
     }
-
     private void initUi() {
         etValue = findViewById(R.id.et_value);
         tvEncrypt = findViewById(R.id.tv_encrypted);
-        btnBle = findViewById(R.id.button_ble);
-        btnNfc = findViewById(R.id.button_nfc);
-        btnScan = findViewById(R.id.button_scan);
-        btnEncrypt = findViewById(R.id.button_encrypt);
     }
     private void initListener() {
-        btnEncrypt.setOnClickListener(this);
-        btnBle.setOnClickListener(this);
-        btnNfc.setOnClickListener(this);
-        btnScan.setOnClickListener(this);
+        findViewById(R.id.button_encrypt).setOnClickListener(this);
+        findViewById(R.id.button_ble).setOnClickListener(this);
+        findViewById(R.id.button_nfc).setOnClickListener(this);
+        findViewById(R.id.button_scan).setOnClickListener(this);
     }
-
 
     @Override
     public void onClick(View v) {
 
         if (v.getId() == R.id.button_encrypt){
+            if (etValue.getText().toString().isEmpty()) {
+                Toast.makeText(this, "Enter text to encrypt", Toast.LENGTH_LONG).show();
+                return;
+            }
             String originalStr = etValue.getText().toString().trim();
             String encryptedString = AES.encrypt(originalStr, Constant.secretKey) ;
             tvEncrypt.setText(encryptedString);
@@ -73,6 +70,7 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
         if(v.getId() == R.id.button_ble){
             if (tvEncrypt.getText().toString().isEmpty()) {
                 Toast.makeText(this, "Encrypt First", Toast.LENGTH_LONG).show();
+                return;
             }
             if (!getPackageManager().hasSystemFeature(
                     PackageManager.FEATURE_BLUETOOTH_LE)) {
@@ -103,6 +101,7 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
         if (v.getId() == R.id.button_nfc){
             if (tvEncrypt.getText().toString().isEmpty()){
                 Toast.makeText(this,"Encrypt First",Toast.LENGTH_LONG).show();
+                return;
             }else{
                 String data = tvEncrypt.getText().toString();
                 sendEncryptedData();
@@ -112,20 +111,17 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
                 mHCEManager.setData(data.getBytes());
             }
         }
-
         if (v.getId() == R.id.button_scan){
             startActivity(new Intent(this, ClientActivity.class));
         }
 
     }
-
     private void setUpAdvertising() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         AdvertiserFragment advertiserFragment = new AdvertiserFragment();
         transaction.replace(R.id.advertiser_container, advertiserFragment);
         transaction.commit();
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -193,15 +189,13 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
 
     private void enableReaderMode() {
         NfcAdapter nfc = NfcAdapter.getDefaultAdapter(this);
-        if (nfc != null) {
+        if (nfc != null)
             nfc.enableReaderMode(this, mHCEManager, READER_FLAGS, null);
-        }
     }
 
     private void disableReaderMode() {
         NfcAdapter nfc = NfcAdapter.getDefaultAdapter(this);
-        if (nfc != null) {
+        if (nfc != null)
             nfc.disableReaderMode(this);
-        }
     }
 }
