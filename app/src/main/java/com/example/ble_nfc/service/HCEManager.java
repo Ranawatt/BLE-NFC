@@ -74,8 +74,7 @@ public class HCEManager implements NfcAdapter.ReaderCallback {
     }
     /**
      * Callback when a new tag is discovered by the system.
-     * Communication with the card should take place here.
-     */
+     * Communication with the card should take place here. */
     @Override
     public void onTagDiscovered(Tag tag) {
         LogI("New tag discovered");
@@ -125,7 +124,6 @@ public class HCEManager implements NfcAdapter.ReaderCallback {
                     return;
                 }
             }
-
             result = isoDep.transceive(ByteUtils.HexStringToByteArray("FFFFFFFF"));
             if (isInvalidHCEResult(result)) {
                 LogI("Send data failed");

@@ -53,19 +53,15 @@ public class ScanResultAdapter extends BaseAdapter {
         TextView lastSeenView = view.findViewById(R.id.last_seen);
 
         ScanResult scanResult = mArrayList.get(position);
-
         String name = scanResult.getDevice().getName();
-        if (name == null) {
+        if (name == null)
             name = mContext.getResources().getString(R.string.no_name);
-        }
         deviceNameView.setText(name);
         deviceAddressView.setText(scanResult.getDevice().getAddress());
         lastSeenView.setText(getTimeSinceString(mContext, scanResult.getTimestampNanos()));
 
         return view;
     }
-
-
     // Search the adapter for an existing device address and return it, otherwise return -1.
     private int getPosition(String address) {
         int position = -1;
@@ -81,9 +77,7 @@ public class ScanResultAdapter extends BaseAdapter {
      * Add a ScanResult item to the adapter if a result from that device isn't already present.
      * Otherwise updates the existing position with the new ScanResult. */
     public void add(ScanResult scanResult) {
-
         int existingPosition = getPosition(scanResult.getDevice().getAddress());
-
         if (existingPosition >= 0)
             // Device is already in list, update its record.
             mArrayList.set(existingPosition, scanResult);

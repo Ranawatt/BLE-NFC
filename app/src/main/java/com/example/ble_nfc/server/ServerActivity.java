@@ -21,7 +21,7 @@ import com.example.ble_nfc.client.ClientActivity;
 import com.example.ble_nfc.service.HCEManager;
 import com.example.ble_nfc.util.Constant;
 
-import static com.example.ble_nfc.util.Utils.READER_FLAGS;
+import static com.example.ble_nfc.util.Constant.READER_FLAGS;
 
 public class ServerActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -169,14 +169,14 @@ public class ServerActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onResume() {
-        super.onResume();
         enableReaderMode();
+        super.onResume();
     }
 
     @Override
     public void onPause() {
-        super.onPause();
         disableReaderMode();
+        super.onPause();
     }
 
     private void enableReaderMode() {
