@@ -10,16 +10,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.ble_nfc.BLE_NFC;
 import com.example.ble_nfc.fragment.AdvertiserFragment;
-import com.example.ble_nfc.service.AdvertiserService;
 import com.example.ble_nfc.util.AES;
 import com.example.ble_nfc.R;
 import com.example.ble_nfc.client.ClientActivity;

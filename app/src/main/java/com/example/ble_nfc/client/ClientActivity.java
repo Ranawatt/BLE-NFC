@@ -14,7 +14,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,11 +24,12 @@ import com.example.ble_nfc.util.AES;
 import com.example.ble_nfc.R;
 import com.example.ble_nfc.util.Constant;
 
+import static com.example.ble_nfc.util.Constant.REQUEST_ENABLE_BT;
+
 public class ClientActivity extends AppCompatActivity implements View.OnClickListener, ScannerFragment.OnReceivedText {
 
     private TextView tvEncrypt, tvDecrypt;
     private BluetoothAdapter mBluetoothAdapter;
-    private int REQUEST_ENABLE_BT = 1;
 
     ServiceReceiver serviceReceiver;
     @Override
@@ -69,7 +69,7 @@ public class ClientActivity extends AppCompatActivity implements View.OnClickLis
                 }else{
                     // Prompt user to turn on Bluetooth
                     Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                    startActivityForResult(enableBtIntent, Constant.REQUEST_ENABLE_BT);
+                    startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
                 }
             }else{
                 Toast.makeText(this, R.string.error_bluetooth_not_supported,

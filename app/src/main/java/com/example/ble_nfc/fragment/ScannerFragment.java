@@ -29,9 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Scans for Bluetooth Low Energy Advertisements matching a filter and displays them to the user.
- */
+// Scans for Bluetooth Low Energy Advertisements matching a filter and displays them to the user.
 public class ScannerFragment extends ListFragment {
 
     private static final String TAG = ScannerFragment.class.getSimpleName();
@@ -54,7 +52,7 @@ public class ScannerFragment extends ListFragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        onReceivedText = (OnReceivedText) context ;
+        onReceivedText = (OnReceivedText) context;
     }
 
     @Override
@@ -103,14 +101,14 @@ public class ScannerFragment extends ListFragment {
                 return super.onOptionsItemSelected(item);
         }
     }
+
     // Start scanning for BLE Advertisements.
     public void startScanning() {
         if (mScanCallback == null) {
             Log.d(TAG, "Starting Scanning");
-            mHandler.postDelayed(()-> {
-                    stopScanning();
+            mHandler.postDelayed(() -> {
+                stopScanning();
             }, SCAN_PERIOD);
-
             mScanCallback = new SampleScanCallback();
             mBluetoothLeScanner.startScan(buildScanFilters(), buildScanSettings(), mScanCallback);
 
@@ -122,6 +120,7 @@ public class ScannerFragment extends ListFragment {
             Toast.makeText(getActivity(), R.string.already_scanning, Toast.LENGTH_SHORT);
         }
     }
+
     // Stop scanning for BLE Advertisements.
     public void stopScanning() {
         Log.d(TAG, "Stopping Scanning");
@@ -136,17 +135,19 @@ public class ScannerFragment extends ListFragment {
 
         ScanFilter.Builder builder = new ScanFilter.Builder();
 //        builder.setServiceUuid(Constant.Service_UUID);
-        builder.setServiceData(Constant.Service_UUID,Constant.ENCRYPTED_STRING.getBytes());
+        builder.setServiceData(Constant.Service_UUID, Constant.ENCRYPTED_STRING.getBytes());
         scanFilters.add(builder.build());
 
         return scanFilters;
     }
+
     // set to use low power (to preserve battery life).
     private ScanSettings buildScanSettings() {
         ScanSettings.Builder builder = new ScanSettings.Builder();
         builder.setScanMode(ScanSettings.SCAN_MODE_LOW_POWER);
         return builder.build();
     }
+
     // Custom ScanCallback object - adds to adapter on success, displays error on failure.
     private class SampleScanCallback extends ScanCallback {
 
@@ -163,7 +164,7 @@ public class ScannerFragment extends ListFragment {
         public void onScanResult(int callbackType, ScanResult result) {
             super.onScanResult(callbackType, result);
             mAdapter.add(result);
-//            String receivedText = result.getDevice().getAddress();
+            // String receivedText = result.getDevice().getAddress();
             mAdapter.notifyDataSetChanged();
         }
 
@@ -173,9 +174,7 @@ public class ScannerFragment extends ListFragment {
             Toast.makeText(getActivity(), "Scan failed with error: " + errorCode, Toast.LENGTH_LONG).show();
         }
     }
-
     public interface OnReceivedText {
         void onReceivedText(String receivedText);
     }
 }
-

@@ -77,12 +77,9 @@ public class ScanResultAdapter extends BaseAdapter {
         }
         return position;
     }
-
-
     /**
      * Add a ScanResult item to the adapter if a result from that device isn't already present.
-     * Otherwise updates the existing position with the new ScanResult.
-     */
+     * Otherwise updates the existing position with the new ScanResult. */
     public void add(ScanResult scanResult) {
 
         int existingPosition = getPosition(scanResult.getDevice().getAddress());
@@ -100,8 +97,7 @@ public class ScanResultAdapter extends BaseAdapter {
     }
     /**
      * Takes in a number of nanoseconds and returns a human-readable string giving a vague
-     * description of how long ago that was.
-     */
+     * description of how long ago that was. */
     public static String getTimeSinceString(Context context, long timeNanoseconds) {
         String lastSeenText = context.getResources().getString(R.string.last_seen) + " ";
 
