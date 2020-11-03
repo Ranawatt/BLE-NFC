@@ -19,9 +19,7 @@ import java.util.List;
 public class HCEManager implements NfcAdapter.ReaderCallback {
 
     private static final String TAG = "HceManager";
-
     private static final String APDU_SELECT_AID = "00A4040000123456789ABCDEF00";
-
     public static final int HCE_ERROR_NOT_CONNECTED = 1;
     public static final int HCE_ERROR_FORMAT_DATA = 2;
     public static final int HCE_ERROR_SEND_DATA = 3;
@@ -51,8 +49,7 @@ public class HCEManager implements NfcAdapter.ReaderCallback {
         int dataLength = data.length;
 
         /**
-         * 00 00 00 00 | 00 00 XX XX (data length)
-         */
+         * 00 00 00 00 | 00 00 XX XX (data length) */
         byte[] command = ByteUtils.HexStringToByteArray(ByteUtils.IntToHexString(0) + ByteUtils.IntToHexString(dataLength));
         mCommandArray.add(command);
 
