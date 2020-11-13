@@ -29,11 +29,13 @@
                  Client will decrypt data and display Encrypted Data on 1st Text View and Decrypted Text on 2nd Text View.
 	
 ###     NFC Communication
+
    ##       3.1 Card Emulation Mode
                 Same as step - i and ii in 2.1 for BLE.
                 User will click on NFC button. On click Encrypted data will be ready for transmission through NFC.
 
    ##       3.2 Reader Mode
+   
        		Same as step-i in 2.2 for BLE.
                 User will click on NFC. Device will start as NFC Reader.
                 Card Emulating device will be tapped on Reader device so data encrypted data will be received by reader.
