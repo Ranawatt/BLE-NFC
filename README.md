@@ -11,9 +11,9 @@
 
 ### 1. Application will work in two modes
   ## 	BLE Server/Card Emulation Mode
-            Screen will contain Edit Text, Text View, 3 buttons (1st for BLE, 2nd for NFC, 3rd for Encrypt)
+            Screen will contain Edit Text, Text View, 4 buttons (1st for BLE, 2nd for NFC, 3rd for Encrypt, 4th for Advertiser Mode)
   ##    BLE Client/NFC Reader Mode
-            Screen will contain 2 Text View, 2 buttons (1st for BLE, 2nd for NFC)
+            Screen will contain 2 Text View, 3 buttons (1st for BLE, 2nd for NFC, 3rd for Scanner Mode)
 	
 ###     BLE Communication	
    ##       2.1. Server Mode
@@ -36,7 +36,7 @@
 
    ##       3.2 Reader Mode
    
-       		Same as step-i in 2.2 for BLE.
+       	    # Same as step-i in 2.2 for BLE.
                 User will click on NFC. Device will start as NFC Reader.
                 Card Emulating device will be tapped on Reader device so data encrypted data will be received by reader.
                 Same as step-iii in 2.2
