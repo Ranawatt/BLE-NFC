@@ -1,4 +1,4 @@
-package com.example.ble_nfc.client;
+ package com.example.ble_nfc.client;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
